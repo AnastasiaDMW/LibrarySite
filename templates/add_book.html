@@ -1,0 +1,40 @@
+
+<!-- Страница добавления книги -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="font-size: 1.5em;">{{messages[0]}}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="all-form" method="POST" enctype="multipart/form-data" onsubmit="return validateRegisterForm()">
+        <label for="title">Название книги</label>
+        <input type="text" id="title" name="title" required></br>
+        
+        <label for="author">Автор книги</label>
+        <input type="text" id="author" name="author" required></br>
+        
+        <label for="public_year">Год публикации</label>
+        <input type="text" id="public_year" name="public_year" minlength="4" maxlength="4" required></br>
+        
+        <label for="isbn">Уникальный номер книги (ISBN)</label>
+        <input type="text" id="isbn" name="isbn" required></br>
+        
+        <label for="image">Изображение обложки (Введите путь к картинке)</label>
+        <input type="text" id="image" name="image" required></br>
+
+        <label for="description">Краткое описание книги</label>
+        <textarea id="description" name="description" rows="4" required></textarea><br>
+
+        <label for="book_content">Новый файл книги</label>
+        <input type="file" id="file" name="file" accept=".docx, .pdf" required><br>
+        
+        <button type="submit" id="save_button">Добавить книгу</button>
+    </form>
+    <form class="all-form" action="{{ url_for('librarian_books') }}" method="GET">
+        <button class="all-form" type="submit" id="back_button">Назад</button>
+    </form>
+</div>
+{% endblock %}

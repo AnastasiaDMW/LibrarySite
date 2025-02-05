@@ -1,0 +1,42 @@
+
+<!-- Страница шаблон с заголовком и навигацией -->
+
+<!DOCTYPE html>
+<html>
+<header>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ head_title }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/headers.css') }}">
+    <nav class="header-nav container flex-container">
+      <h1 class="logo"><div class="logo-link" >online library</div></h1>
+      <ul class="header-menu flex-container">
+        <li><a class="header-menu-link" href="{{ url_for('search')}}">Поиск книг</a></li>
+        <li><a class="header-menu-link" href="{{ url_for('history_issuance')}}">История</a></li>
+        <li><a class="header-menu-link" href="{{ url_for('profile')}}">Профиль</a></li>
+      </ul>
+      {% if 'user_id' not in session %}
+        <button class="ghost-button" onclick="location.href='{{ url_for('login') }}'">Войти</button>
+        <button class="ghost-button" onclick="location.href='{{ url_for('register') }}'">Зарегистрироваться</button>
+      {% else %}
+        <button class="ghost-button" onclick="location.href='{{ url_for('logout') }}'">Выйти</button>
+        <div class="all-form">
+          <img src="{{ url_for('static', filename='avatars/' + session.get('avatar')) }}" style="width: 65px; height: 65px; border-radius: 50%;" alt="Avatar"/><br>
+        </div>
+      {% endif %}
+    </nav>
+    <section class="header-content">
+      <figure class="header-img">
+        <img src="https://u.livelib.ru/album/1006214267/o/jtd296mx/o-o.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=985&amp;w=1680" alt="Man holding camera looking at fireworks"></figure>
+      <div class="header-description">
+        <h2 class="header-title">{{ head_title }}</h2>
+      </div>    
+    </section>
+</header>
+
+<body>
+    {% block content %}{% endblock %}
+</body>
+
+</html>

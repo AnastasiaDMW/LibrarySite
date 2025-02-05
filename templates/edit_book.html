@@ -1,0 +1,48 @@
+
+<!-- Страница редактирования книги -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="font-size: 1.5em;">{{messages[0]}}</p>
+        {% endif %}
+    {% endwith %}
+    <div class="all-form">
+        {% if book[5] %}
+            <img src="{{ book[5] }}" style="height: 100%" alt="Book Image"/><br>
+        {% else %}
+            <p>Изображение отсутствует.</p>
+        {% endif %}
+    </div>
+
+    <form class="all-form" method="POST" enctype="multipart/form-data">
+        <label for="title">Название книги</label>
+        <input type="text" id="title" name="title" value="{{book[1]}}" required></br>
+        
+        <label for="author">Автор книги</label>
+        <input type="text" id="author" name="author" value="{{book[2]}}" required></br>
+        
+        <label for="public_year">Год публикации</label>
+        <input type="text" id="public_year" name="public_year" value="{{book[3]}}" minlength="4" maxlength="4" required></br>
+        
+        <label for="isbn">Уникальный номер книги (ISBN)</label>
+        <input type="text" id="isbn" name="isbn" value="{{book[4]}}" required></br>
+        
+        <label for="image">Изображение обложки (Введите путь к картинке)</label>
+        <input type="text" id="image" name="image" value="{{book[5]}}" required></br>
+
+        <label for="description">Краткое описание книги</label>
+        <textarea id="description" name="description" rows="4" required>{{ book[8] }}</textarea><br>
+
+        <label for="book_content">Новый файл книги</label>
+        <input type="file" id="file" name="file" accept=".docx, .pdf"><br>
+        
+        <button type="submit" id="save_button">Сохранить изменения</button>
+    </form>
+    <form class="all-form" action="{{ url_for('librarian_books') }}" method="GET">
+        <button class="all-form" type="submit" id="back_button">Назад</button>
+    </form>
+</div>
+{% endblock %}

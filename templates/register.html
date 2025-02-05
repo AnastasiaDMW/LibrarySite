@@ -1,0 +1,38 @@
+
+<!-- Страница регистрации пользователя -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="font-size: 1.5em">{{messages[0]}}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="all-form" method="POST" enctype="multipart/form-data">
+        <label for="firstname">Введите имя</label>
+        <input type="text" id="firstname" name="firstname" required></br>
+        
+        <label for="lastname">Введите фамилию</label>
+        <input type="text" id="lastname" name="lastname" required></br>
+        
+        <label for="email">Введите email</label>
+        <input type="email" id="email" name="email" required></br>
+        
+        <label for="phone">Введите номер телефона</label>
+        <input type="tel" id="phone" name="phone" required></br>
+        
+        <label for="birth">Введите дату рождения</label>
+        <input type="date" id="birth" name="birth" required></br>
+        
+        <label for="password">Введите пароль</label>
+        <input type="password" id="new_password" name="new_password" required minlength="6"></br>
+        
+        <label for="avatar">Загрузите аватарку</label>
+        <input type="file" id="avatar" name="avatar" accept="image/*" required></br>
+        
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+{% endblock %}

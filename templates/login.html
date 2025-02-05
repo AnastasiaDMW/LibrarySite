@@ -1,0 +1,21 @@
+
+<!-- Страница логина -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="font-size: 1.5em;">{{messages[0]}}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="all-form" method="POST" enctype="multipart/form-data">
+        <label for="email">Введите email</label>
+        <input type="email" id="email" name="email" placeholder="Введите email" required></br>
+        <label for="email">Введите пароль</label>
+        <input type="password" id="password" placeholder="Введите пароль" name="password" required minlength="6"></br>
+        <button  type="submit">Войти</button>
+    </form>
+</div>
+{% endblock %}

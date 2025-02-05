@@ -1,0 +1,49 @@
+
+<!-- Страница профиля пользователя -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="font-size: 1.5em;">{{messages[0]}}</p>
+        {% endif %}
+    {% endwith %}
+    {% if account_role == 3 %}
+    <form class="all-form" action="{{ url_for('librarian_books') }}" method="GET">
+        <button type="submit" id="save_button">Список книг</button>
+    </form></br>
+    <form class="all-form" action="{{ url_for('request_books') }}" method="GET">
+        <button type="submit" id="save_button">Запросы на добавление книги</button>
+    </form></br></br></br>
+    {% endif %}
+    <div class="all-form">
+    <img src="{{ url_for('static', filename='avatars/' + account[8]) }}" alt="Avatar"/><br>
+    </div>
+
+    <form class="all-form" method="POST" enctype="multipart/form-data">
+        <label for="firstname">Имя</label>
+        <input type="text" id="firstname" name="firstname" value="{{account[1]}}" required></br>
+        
+        <label for="lastname">Фамилия</label>
+        <input type="text" id="lastname" name="lastname" value="{{account[2]}}" required></br>
+        
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{account[3]}}" required></br>
+        
+        <label for="phone">Номер телефона</label>
+        <input type="tel" id="phone" name="phone" value="{{account[4]}}" required></br>
+        
+        <label for="birth">Дата рождения</label>
+        <input type="date" id="birth" name="birth" value="{{account[5]}}" required></br>
+        
+        <label for="password">Новый пароль</label>
+        <input type="password" id="password" name="new_password" value="" minlength="6"></br>
+        
+        <label for="avatar">Новая аватарка</label>
+        <input type="file" id="avatar" name="new_avatar" accept="image/*"></br>
+        
+        <button type="submit" id="save_button">Сохранить изменения</button>
+    </form>
+</div>
+{% endblock %}

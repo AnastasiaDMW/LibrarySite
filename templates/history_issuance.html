@@ -1,0 +1,58 @@
+
+<!-- Страница истории выдачи книг -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p style="font-size: 1.5em;">{{messages[0]}}</p>
+        {% endif %}
+    {% endwith %}
+    <div class="books-list">
+        {% if books == None%}
+            <h2>У вас пока нет доступных книг</h2>
+        {% else %}
+        <form action="{{ url_for('history_issuance') }}" method="POST" style="display:inline;">
+            <input type="hidden" name="share" id="linkInput" value="http://localhost:5000/share_page?reader={{ account_id }}">
+            <button class="accent-button" onclick="copyToClipboard()" style="height: 45px; width: 250px;" type="submit">Поделиться библиотекой</button>
+            <script src="/static/js/copy_link.js"></script>
+        </form></br></br>
+        <h2>Список доступных книг</h2>
+        <ul>
+        {% for book in books %}
+        <li class="book-item">
+            <img src="{{ book[9] }}" alt="{{ book[5] }}" class="book-image">
+        <div class="book-info">
+            <h2 class="book-title">{{ book[5] }}</h2>
+            <div class="book-author">Автор: {{ book[6] }}</div>
+            <div class="book-isbn">ISBN: {{ book[8] }}</div>
+            <div class="book-isbn">Год публикации: {{ book[7] }} г.</div>
+            <div class="book-isbn">Раздел: {{ book[3] }}</div>
+            <div class="book-isbn">Дата получения книги: {{ book[1] }}</div></br>
+            {% if book[2] == true %}
+                <div class="book-isbn" style="font-size: 1.5em; color: #3000b3;">Прочитано</div></br>
+            {% else %}
+            <form action="{{ url_for('history_issuance') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="book_id" value="{{ book[4] }}">
+                <button class="accent-button" type="submit">Отметить как прочитанную</button>
+            </form></br>
+            {% endif %}
+            <form action="{{ url_for('history_issuance') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="file_path" value="{{ book[10] }}">
+                <button class="accent-button" style="background-color: #0b8f1a" type="submit">Скачать книгу</button>
+            </form>
+        </div>
+        </li>
+        {% endfor %}
+        </ul></br>
+        <div class="pagination">
+            {% for p in range(1, total_pages + 1) %}
+                <a href="{{ url_for('history_issuance', page=p) }}" 
+                    class="{% if p == page %}active{% endif %}">{{ p }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

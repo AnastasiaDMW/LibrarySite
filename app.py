@@ -61,8 +61,8 @@ def delete_file(filename: str, path):
         os.remove(file_path)
         
 def is_older_than_five_years(birth_date):
-    birth = datetime.strptime(birth_date, '%Y-%m-%d')
-    today = datetime.today()
+    birth = datetime.datetime.strptime(birth_date, '%Y-%m-%d')
+    today = datetime.datetime.today()
     age = today.year - birth.year
     if today.month < birth.month or (today.month == birth.month and today.day < birth.day):
         age -= 1

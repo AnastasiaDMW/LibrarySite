@@ -33,9 +33,12 @@ class LibraryDatabase:
         cur.execute(SchemeDatabase.CREATE_HISTORY_OF_ISSUANCE_TABLE)
         
     def insert_data(self, cur):
-        cur.execute(DataDatabase.INSERT_ROLES)
-        cur.execute(DataDatabase.INSERT_LIBRARIAN)
-        cur.execute(DataDatabase.INSERT_CHATERS)
-        cur.execute(DataDatabase.INSERT_BOOKS_CHAPTER_PSYCHOLOGY)
-        cur.execute(DataDatabase.INSERT_BOOKS_CHAPTER_HORROR)
-        cur.execute(DataDatabase.INSERT_BOOKS_CHAPTER_DETECTIVE)
+        try:
+            cur.execute(DataDatabase.INSERT_ROLES)
+            cur.execute(DataDatabase.INSERT_LIBRARIAN)
+            cur.execute(DataDatabase.INSERT_CHATERS)
+            cur.execute(DataDatabase.INSERT_BOOKS_CHAPTER_PSYCHOLOGY)
+            cur.execute(DataDatabase.INSERT_BOOKS_CHAPTER_HORROR)
+            cur.execute(DataDatabase.INSERT_BOOKS_CHAPTER_DETECTIVE)
+        except psycopg2.Error as e:
+            print("Данные уже загружены")
